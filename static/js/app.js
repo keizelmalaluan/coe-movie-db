@@ -1,6 +1,5 @@
 $(function() {
     // your code here
-    var header = "Now Showing";
     var config;
     var baseUrl = 'http://api.themoviedb.org/3/',
         apiKey = 'e50a6caece56dc3ee80e5bf63491fdfd';
@@ -18,31 +17,26 @@ $(function() {
     function setEventHandlers(config) {
         $('#form-search').submit(function() {
             var query = $('.input-query').val();
-            header = "Search Results";
             searchMovie(query);
             return  false;
         });
 
         $('.btn-now-showing').click(function() {
-            header = "Now Showing";
             loadNowShowing();
             return  false;
         });
 
         $('.btn-up-coming').click(function() {
-            header = "Upcoming";
             loadUpComing();
             return  false;
         });
 
         $('.btn-popular').click(function() {
-            header = "Popular";
             loadPopular();
             return  false;
         });
 
         $('.btn-top-rated').click(function() {
-            header = "Top Rated";
             loadTopRated();
             return false;
         });
@@ -61,12 +55,6 @@ $(function() {
     }
 
     function displayMovies(data) {
-            var htmlHead = [
-            '<div class="page-header">',
-                '<h1>'+header+'</h1>',
-            '</div>'   
-            ];
-            $('.movies-list').append($(htmlHead.join('')));
         data.results.forEach(function(movie) {
             var imageSrc = config.images.base_url + config.images.poster_sizes[3] + movie.poster_path;
             var htmlStr = [
@@ -82,7 +70,6 @@ $(function() {
             $('.movies-list').append($(htmlStr.join('')));
         });
     }
-
 
     function loadNowShowing() {
         var nowShowingUrl = baseUrl + 'movie/now_playing';
