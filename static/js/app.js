@@ -77,23 +77,24 @@ $(function() {
             ];
             $('.movies-list').append($(htmlHead.join('')));
 
-
         data.results.forEach(function(movie) {
             var imageSrc = config.images.base_url + config.images.poster_sizes[3] + movie.poster_path;
-            var htmlStr = [
-                            '<div class="col-md-4 portfolio-item">',
-                                '<a href="javascript:void(0)" class="'+clFull+'">',
-                                    '<img class="img-responsive" src="' + imageSrc + '" alt="">',
-                                '</a>',
-                                '<h3>',
-                                    '<center><a href="javascript:void(0)" class="'+clFull+'">' + movie.title +'</a></center>',
-                                '</h3>',
-                            '</div>'
-                            ];
+            var object = [{
+                "title" : movie.title,
+                "image" : imageSrc
+
+            }
+
+
+            ];
+            
+            var template = Handlebars.compile($('#tpl-div').html());
+            var markup = template(object);
+
             idArr.push(movie.id);
             num++;
             clFull = cl+num;
-            $('.movies-list').append($(htmlStr.join('')));
+            $('.movies-list').append(markup);
         });
             $('.btn-sel0').click(function() {
             displaySingle(0);
@@ -206,7 +207,6 @@ $(function() {
         }, function(response) {
             displaySolo(response);
         });
-            
     }
     var a=[];
     var b=[];
@@ -214,7 +214,6 @@ $(function() {
     var d=[];
     var e=[];
     var f=[];
-    var image='';
     function getVid(help){
         help.results.forEach(function(movie) {
             a.push(movie.key);
@@ -229,16 +228,16 @@ $(function() {
     }
 
     function getSimilar(help){
+        var imageSrc='';
         help.results.forEach(function(movie) {
-            var image = config.images.base_url + config.images.poster_sizes[3] + movie.poster_path;
-            f.push(image);
+            imageSrc = config.images.base_url + config.images.poster_sizes[3] + movie.poster_path;
+            f.push(imageSrc);
             idArr.push(movie.id);
         });
         console.log(idArr);
     }
 
     function displaySolo(data){
-
         var htmkStr = [
         '<div class="row">',
             '<div class="col-lg-12">',
@@ -268,49 +267,49 @@ $(function() {
             '</div>',
             '<div class="col-sm-3 col-xs-6">',
                 '<a href="javascript:void(0)" class="sim1">',
-                    '<img class="img-responsive portfolio-item" src="'+f[0]+' alt="">',
+                    '<img class="img-responsive portfolio-item" src="'+f[3]+' alt="">',
                 '</a>',
             '</div>',
             '<div class="col-sm-3 col-xs-6">',
                 '<a href="javascript:void(0)" class="sim2">',
-                    '<img class="img-responsive portfolio-item" src="'+f[1]+' alt="">',
+                    '<img class="img-responsive portfolio-item" src="'+f[4]+' alt="">',
                 '</a>',
             '</div>',
             '<div class="col-sm-3 col-xs-6">',
                 '<a href="javascript:void(0)" class="sim3">',
-                    '<img class="img-responsive portfolio-item" src="'+f[2]+' alt="">',
+                    '<img class="img-responsive portfolio-item" src="'+f[5]+' alt="">',
                 '</a>',
             '</div>',
             '<div class="col-sm-3 col-xs-6">',
                 '<a href="javascript:void(0)" class="sim4">',
-                    '<img class="img-responsive portfolio-item" src="'+f[3]+' alt="">',
+                    '<img class="img-responsive portfolio-item" src="'+f[6]+' alt="">',
                 '</a>',
             '</div>',   
         '</div>'
         ];
-        $('#cont')  .append($(htmkStr.join('')));
-        $('.sim1').click(function() {
-            displaySingle(0);
-            return false;
-        });
-            $('.sim2').click(function() {
-            displaySingle(1);
-            return false;
-        });
-            $('.sim3').click(function() {
-            displaySingle(2);
-            return false;
-        });
-            $('.sim4').click(function() {
-            displaySingle(3);
-            return false;
-        });
+        $('#cont').append($(htmkStr.join('')));
             a = [];
             b = [];
             c = [];
             d = [];
             e = [];
             f = [];
+        $('.sim1').click(function() {
+            displaySingle(3);
+            return false;
+        });
+            $('.sim2').click(function() {
+            displaySingle(4);
+            return false;
+        });
+            $('.sim3').click(function() {
+            displaySingle(5);
+            return false;
+        });
+            $('.sim4').click(function() {
+            displaySingle(6);
+            return false;
+        });
     }
 
 
