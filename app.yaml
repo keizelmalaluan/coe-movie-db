@@ -1,5 +1,4 @@
-application: coe-movie-db-13
-version: 1
+application: coe-movie-db-14
 runtime: python27
 api_version: 1
 threadsafe: true
